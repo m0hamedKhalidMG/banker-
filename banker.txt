@@ -1,0 +1,177 @@
+
+#include<bits/stdc++.h>
+
+using namespace std;
+int claim[100][100];
+int allocation[100][100];
+int num_OF_process,num_OF_resource;
+int difference[100][100];
+int mark[100]={0};
+vector<int>available,resource;
+
+
+int check_logic_input()
+{
+
+   for(int i=0;i<num_OF_resource;i++) {
+
+
+
+            int tolal_alloc_per_colum=0;
+
+        for(int j=0;j<num_OF_process;j++){
+          tolal_alloc_per_colum+=allocation[j][i];
+         if(claim[j][i]>resource[i]||allocation[j][i]>claim[j][i])
+            return 0;
+
+        }
+      if(resource[i]!=tolal_alloc_per_colum+available[i])
+
+        return 0;
+
+      }
+
+
+    return 1;
+}
+
+
+
+int solve(){
+
+
+
+for(int i=0;i<num_OF_process;i++){
+
+        if(!mark[i]){
+        bool flag=0;
+        for(int j=0;j<num_OF_resource;j++)
+        {
+
+            if(available[j]<difference[i][j])
+            flag=1;
+
+        }
+if(!flag){
+mark[i]=1;
+   for(int j=0;j<num_OF_resource;j++){
+       available[j]+= allocation[i][j];
+       allocation[i][j]=0;}
+return i+1;
+}
+        }
+
+
+
+
+
+
+}
+return 0;
+}
+
+
+
+int main()
+{
+
+   cin>>num_OF_process>>num_OF_resource;
+   for(int i=0;i<num_OF_process;i++)
+        for(int j=0;j<num_OF_resource;j++)
+        cin>>claim[i][j];
+
+    for(int i=0;i<num_OF_process;i++)
+        for(int j=0;j<num_OF_resource;j++)
+        cin>>allocation[i][j];
+
+
+
+
+
+
+
+
+        for(int i=0;i<num_OF_resource;i++)
+        {
+
+            int available_resourse;
+            cin>>available_resourse;
+            available.push_back(available_resourse);
+        }
+
+
+
+
+        for(int i=0;i<num_OF_resource;i++)
+        {
+
+            int total_resourse;
+            cin>>total_resourse;
+           resource.push_back(total_resourse);
+        }
+
+if(check_logic_input()){
+        for(int i=0;i<num_OF_process;i++)
+        for(int j=0;j<num_OF_resource;j++)
+        difference[i][j]=claim[i][j]-allocation[i][j];
+
+
+
+ for(int i=0;i<num_OF_process;i++){
+
+int result=solve();
+if(result)
+    cout<<"p"<<result<<endl;
+    else
+   {
+
+      cout<<"no safe state";
+    return 0;
+    }
+
+ }
+
+}
+
+    return 0;
+}
+/*4 3
+3 2 2
+6 1 3
+3 1 4
+4 2 2
+1 0 0
+6 1 2
+2 1 1
+0 0 2
+0 1 1
+9 3 6
+
+
+
+
+
+
+
+
+
+
+
+
+4 3
+3 2 2
+6 1 3
+3 1 4
+4 2 2
+2 0 1
+5 1 1
+2 1 1
+0 0 2
+0 1 1
+9 3 6
+*/
+
+
+
+
+
